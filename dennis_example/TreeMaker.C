@@ -10,8 +10,8 @@
 
 #include <calotrigger/CaloTriggerInfo.h>
 
-//#include <g4cemc/RawClusterContainer.h>
-//#include <g4cemc/RawCluster.h>
+#include <calobase/RawClusterContainer.h>
+#include <calobase/RawCluster.h>
 
 #include <calobase/RawTowerGeom.h>
 #include <calobase/RawTower.h>
@@ -58,7 +58,7 @@ int TreeMaker::Init(PHCompositeNode *topNode)
   _tree->Branch("tower_phi",&_b_tower_phi, "tower_phi[tower_n]/F");
   */
 
-  _tree->Branch("bkg_n",&_b_bkg_n, "bkg_n/I");
+  /*_tree->Branch("bkg_n",&_b_bkg_n, "bkg_n/I");
   _tree->Branch("bkg_layer",&_b_bkg_layer, "bkg_layer[bkg_n]/I");
   _tree->Branch("bkg_eta",&_b_bkg_eta, "bkg_eta[bkg_n]/I");
   _tree->Branch("bkg_E",&_b_bkg_E, "bkg_E[bkg_n]/F");
@@ -67,7 +67,7 @@ int TreeMaker::Init(PHCompositeNode *topNode)
   _tree->Branch("bkg2_layer", &_b_bkg2_layer, "bkg2_layer[bkg2_n]/I");
   _tree->Branch("bkg2_eta",   &_b_bkg2_eta,   "bkg2_eta[bkg2_n]/I");
   _tree->Branch("bkg2_E",     &_b_bkg2_E,     "bkg2_E[bkg2_n]/F");
-
+*/
   /*
   _tree->Branch("trigEM2_E", &_b_trigEM2_E, "trigEM2_E/F");
   _tree->Branch("trigEM2_phi", &_b_trigEM2_phi, "trigEM2_phi/F");
@@ -96,13 +96,12 @@ int TreeMaker::Init(PHCompositeNode *topNode)
   _tree->Branch("trigFull10_E", &_b_trigFull10_E, "trigFull10_E/F");
   _tree->Branch("trigFull10_eta", &_b_trigFull10_eta, "trigFull10_eta/F");
   _tree->Branch("trigFull10_phi", &_b_trigFull10_phi, "trigFull10_phi/F");
-
+*/
   _tree->Branch("cluster_n", &_b_cluster_n,"cluster_n/I");
   _tree->Branch("cluster_pt", _b_cluster_pt,"cluster_pt[cluster_n]/F");
   _tree->Branch("cluster_eta",_b_cluster_eta,"cluster_eta[cluster_n]/F");
   _tree->Branch("cluster_phi",_b_cluster_phi,"cluster_phi[cluster_n]/F");
   _tree->Branch("cluster_layer",_b_cluster_layer,"cluster_layer[cluster_n]/I");
-  */
 
 
   _tree->Branch("particle_n", &_b_particle_n,"particle_n/I");
@@ -111,7 +110,7 @@ int TreeMaker::Init(PHCompositeNode *topNode)
   _tree->Branch("particle_phi", _b_particle_phi,"particle_phi[particle_n]/F");
   _tree->Branch("particle_pid", _b_particle_pid,"particle_pid[particle_n]/I");
 
-  _tree->Branch("jet2_n", &_b_jet2_n,"jet2_n/I");
+  /*_tree->Branch("jet2_n", &_b_jet2_n,"jet2_n/I");
   _tree->Branch("jet2_pt", _b_jet2_pt,"jet2_pt[jet2_n]/F");
   _tree->Branch("jet2_eta",_b_jet2_eta,"jet2_eta[jet2_n]/F");
   _tree->Branch("jet2_phi",_b_jet2_phi,"jet2_phi[jet2_n]/F");
@@ -174,8 +173,8 @@ int TreeMaker::Init(PHCompositeNode *topNode)
   _tree->Branch("truthjet5_n", &_b_truthjet5_n,"truthjet5_n/I");
   _tree->Branch("truthjet5_pt", _b_truthjet5_pt,"truthjet5_pt[truthjet5_n]/F");
   _tree->Branch("truthjet5_eta",_b_truthjet5_eta,"truthjet5_eta[truthjet5_n]/F");
-  _tree->Branch("truthjet5_phi",_b_truthjet5_phi,"truthjet5_phi[truthjet5_n]/F");
-std::cout<<"INIT Done"<<std::endl;
+  _tree->Branch("truthjet5_phi",_b_truthjet5_phi,"truthjet5_phi[truthjet5_n]/F");*/
+std::cout<<"INIT Done"<<'\n';
   return 0;
 
 }
@@ -183,7 +182,7 @@ std::cout<<"INIT Done"<<std::endl;
 int TreeMaker::process_event(PHCompositeNode *topNode)
 {
 
-  std::cout << "DVP : at process_event, tree size is: " << _tree->GetEntries() << std::endl;
+  std::cout << "DVP : at process_event, tree size is: " << _tree->GetEntries() <<'\n';
 
 /*  PHHepMCGenEventMap * geneventmap = findNode::getClass<PHHepMCGenEventMap>(topNode, "PHHepMCGenEventMap");
   if (!geneventmap)
@@ -233,12 +232,11 @@ int TreeMaker::process_event(PHCompositeNode *topNode)
   //std::cout << "TreeMaker::process_event: " << towersOH3->size() << " TOWER_CALIB_HCALOUT towers" << std::endl;
   //std::cout << "TreeMaker::process_event: " << towersOH4->size() << " TOWER_CALIB_HCALOUT_SUB1 towers" << std::endl;
 
-  //RawTowerGeomContainer *geomEM = findNode::getClass<RawTowerGeomContainer>(topNode, "TOWERGEOM_CEMC");
-  //RawTowerGeomContainer *geomIH = findNode::getClass<RawTowerGeomContainer>(topNode, "TOWERGEOM_HCALIN");
-  //RawTowerGeomContainer *geomOH = findNode::getClass<RawTowerGeomContainer>(topNode, "TOWERGEOM_HCALOUT");
+  /*RawTowerGeomContainer *geomEM = findNode::getClass<RawTowerGeomContainer>(topNode, "TOWERGEOM_CEMC");
+  RawTowerGeomContainer *geomIH = findNode::getClass<RawTowerGeomContainer>(topNode, "TOWERGEOM_HCALIN");
+  RawTowerGeomContainer *geomOH = findNode::getClass<RawTowerGeomContainer>(topNode, "TOWERGEOM_HCALOUT");
 
-  /*
-  std::cout << " EM has nphi / neta = " << geomEM->get_phibins() << " / " << geomEM->get_etabins() << std::endl;
+  //std::cout << " EM has nphi / neta = " << geomEM->get_phibins() << " / " << geomEM->get_etabins() << std::endl;
 
   double EMCAL_ETA_LOW[96];
   double EMCAL_ETA_HIGH[96];
@@ -248,19 +246,19 @@ int TreeMaker::process_event(PHCompositeNode *topNode)
 
   for (int n = 0; n < geomEM->get_phibins(); n++) {
     std::pair<double, double> bounds = geomEM->get_phibounds( n );
-    std::cout << " phi bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second << std::endl;
+    std::cout << " phi bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second << '\n';
     EMCAL_PHI_LOW[ n ] = bounds.first;
     EMCAL_PHI_HIGH[ n ] = bounds.second;
   }
   for (int n = 0; n < geomEM->get_etabins(); n++) {
     std::pair<double, double> bounds = geomEM->get_etabounds( n );
-    std::cout << " eta bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second << std::endl;
+    std::cout << " eta bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second << '\n';
     EMCAL_ETA_LOW[ n ] = bounds.first;
     EMCAL_ETA_HIGH[ n ] = bounds.second;
   }
 
-  std::cout << " IH has nphi / neta = " << geomIH->get_phibins() << " / " << geomIH->get_etabins() << std::endl;
-  std::cout << " OH has nphi / neta = " << geomOH->get_phibins() << " / " << geomOH->get_etabins() << std::endl;
+  std::cout << " IH has nphi / neta = " << geomIH->get_phibins() << " / " << geomIH->get_etabins() <<'\n';
+  std::cout << " OH has nphi / neta = " << geomOH->get_phibins() << " / " << geomOH->get_etabins() << '\n';
 
   double HCAL_ETA_LOW[24];
   double HCAL_ETA_HIGH[24];
@@ -270,25 +268,25 @@ int TreeMaker::process_event(PHCompositeNode *topNode)
 
   for (int n = 0; n < geomIH->get_phibins(); n++) {
     std::pair<double, double> bounds = geomIH->get_phibounds( n );
-    std::cout << " phi bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second << std::endl;
+    std::cout << " phi bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second <<'\n';
     HCAL_PHI_LOW[ n ] = bounds.first;
     HCAL_PHI_HIGH[ n ] = bounds.second;
   }
   for (int n = 0; n < geomIH->get_etabins(); n++) {
     std::pair<double, double> bounds = geomIH->get_etabounds( n );
-    std::cout << " eta bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second << std::endl;
+    std::cout << " eta bin #" << n << ", bounds = " << bounds.first << " - " << bounds.second << '\n';
     HCAL_ETA_LOW[ n ] = bounds.first;
     HCAL_ETA_HIGH[ n ] = bounds.second;
   }
-
+*/
   // emcal
-  std::cout << " EMCAL_PHI_LOW[256] = { ";
+  /*std::cout << " EMCAL_PHI_LOW[256] = { ";
   for (int n = 0; n < 256; n++) {
     std::cout << EMCAL_PHI_LOW[ n ];
     if (n < 255) std::cout << ", ";
     else std::cout << " }; ";
   }
-  std::cout << std::endl;
+  std::cout << '\n';
 
   std::cout << " EMCAL_PHI_HIGH[256] = { ";
   for (int n = 0; n < 256; n++) {
@@ -296,7 +294,7 @@ int TreeMaker::process_event(PHCompositeNode *topNode)
     if (n < 255) std::cout << ", ";
     else std::cout << " }; ";
   }
-  std::cout << std::endl;
+  std::cout << '\n';
 
   std::cout << " EMCAL_ETA_LOW[96] = { ";
   for (int n = 0; n < 96; n++) {
@@ -346,9 +344,8 @@ int TreeMaker::process_event(PHCompositeNode *topNode)
     else std::cout << " }; ";
   }
   std::cout << std::endl;
-
-  return 0;
 */
+  //return 0;
 
   _b_tower_n = 0;
 
@@ -414,7 +411,7 @@ int TreeMaker::process_event(PHCompositeNode *topNode)
     }
   }
   */
-std::cout<<"starting jet analysis"<<std::endl;
+//std::cout<<"starting jet analysis"<<std::endl;
   /*{
     JetMap* truth_jets = findNode::getClass<JetMap>(topNode,"AntiKt_Truth_r02");
     //std::cout << "R = 0.2 truth jets has size " << truth_jets->size() << std::endl;
@@ -752,15 +749,13 @@ std::cout<<"more jets 7"<<std::endl;
 
 */
   _b_cluster_n = 0;
-
-  /*
   {
-  RawClusterContainer *clusters = findNode::getClass<RawClusterContainer>(topNode,"CLUSTER_CEMC");
+  RawClusterContainer *clusters = findNode::getClass<RawClusterContainer>(topNode,"CLUSTER_CEMC"); // gets cluster information for the EMCAL
 
   RawClusterContainer::ConstRange begin_end = clusters->getClusters();
   RawClusterContainer::ConstIterator rtiter;
 
-  //std::cout << " I see " << clusters->size() << " clusters " << std::endl;
+  std::cout << " I see " << clusters->size() << " clusters " << '\n';
 
   for (rtiter = begin_end.first; rtiter !=  begin_end.second; ++rtiter) {
     RawCluster *cluster = rtiter->second;
@@ -774,13 +769,13 @@ std::cout<<"more jets 7"<<std::endl;
     _b_cluster_phi[ _b_cluster_n ] =  cluster->get_phi();
     _b_cluster_layer[ _b_cluster_n ] = 0;
 
-    std::cout << " cluster (CEMC) # " << _b_cluster_n << " pt/eta/phi = " << pt << " / " << cluster->get_eta() << " / " << cluster->get_phi() << std::endl;
+    std::cout << " cluster (CEMC) # " << _b_cluster_n << " pt/eta/phi = " << pt << " / " << cluster->get_eta() << " / " << cluster->get_phi() << '\n';
 
     _b_cluster_n++;
   }
   }
-
-  {
+ // I think I only case about the EMCAL at this stage
+  /*{
   RawClusterContainer *clusters = findNode::getClass<RawClusterContainer>(topNode,"CLUSTER_HCALIN");
   
   RawClusterContainer::ConstRange begin_end = clusters->getClusters();
@@ -801,7 +796,7 @@ std::cout<<"more jets 7"<<std::endl;
     _b_cluster_phi[ _b_cluster_n ] =  cluster->get_phi();
     _b_cluster_layer[ _b_cluster_n ] = 1;
 
-    std::cout << " cluster (IHCal) # " << _b_cluster_n << " pt/eta/phi = " << pt << " / " << cluster->get_eta() << " / " << cluster->get_phi() << std::endl;
+    std::cout << " cluster (IHCal) # " << _b_cluster_n << " pt/eta/phi = " << pt << " / " << cluster->get_eta() << " / " << cluster->get_phi() << '\n';
 
     _b_cluster_n++;
   }
@@ -840,7 +835,7 @@ std::cout<<"more jets 7"<<std::endl;
   PHG4TruthInfoContainer* truthinfo = findNode::getClass<PHG4TruthInfoContainer>(topNode,"G4TruthInfo");
   PHG4TruthInfoContainer::Range range = truthinfo->GetPrimaryParticleRange();
 
-std::cout<<"truth info"<<std::endl;
+std::cout<<"truth info"<<'\n';
   for ( PHG4TruthInfoContainer::ConstIterator iter = range.first; iter != range.second; ++iter ) {
     PHG4Particle* g4particle = iter->second; // You may ask yourself, why second?
 
