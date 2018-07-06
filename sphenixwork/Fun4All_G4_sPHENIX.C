@@ -62,13 +62,13 @@ int Fun4All_G4_sPHENIX(
   bool do_pstof = false;
 
   bool do_cemc = true;
-  bool do_cemc_cell = do_cemc && false;
+  bool do_cemc_cell = do_cemc && true;
   bool do_cemc_twr = do_cemc_cell && true;
   bool do_cemc_cluster = do_cemc_twr && true;
   bool do_cemc_eval = do_cemc_cluster && false;
 
   bool do_hcalin = true;
-  bool do_hcalin_cell = do_hcalin && false;
+  bool do_hcalin_cell = do_hcalin && true;
   bool do_hcalin_twr = do_hcalin_cell && true;
   bool do_hcalin_cluster = do_hcalin_twr && false;
   bool do_hcalin_eval = do_hcalin_cluster && false;
@@ -76,7 +76,7 @@ int Fun4All_G4_sPHENIX(
   bool do_magnet = true;
 
   bool do_hcalout = true;
-  bool do_hcalout_cell = do_hcalout && false;
+  bool do_hcalout_cell = do_hcalout && true;
   bool do_hcalout_twr = do_hcalout_cell && true;
   bool do_hcalout_cluster = do_hcalout_twr && false;
   bool do_hcalout_eval = do_hcalout_cluster && false;
@@ -113,7 +113,7 @@ int Fun4All_G4_sPHENIX(
   gSystem->Load("libg4hough.so");
   gSystem->Load("libg4eval.so");
 
-  //gSystem->Load("libTreeMaker.so");
+  gSystem->Load("libTreeMaker.so");
 
   // establish the geometry and reconstruction setup
   gROOT->LoadMacro("G4Setup_sPHENIX.C");
@@ -516,8 +516,12 @@ int Fun4All_G4_sPHENIX(
   if (do_dst_compress) DstCompress(out);
   se->registerOutputManager(out);
 
-  //TreeMaker *tt = new TreeMaker( outputFile );
-  //se->registerSubsystem( tt );
+  ClusterIso *clusterIso = new ClusterIso(outputFile, 5, .3);
+  se->registerSubsystem(clusterIso); 
+
+  TreeMaker *tt = new TreeMaker( outputFile );
+  se->registerSubsystem( tt );
+  
   
   //-----------------
   // Event processing

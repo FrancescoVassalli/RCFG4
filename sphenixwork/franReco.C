@@ -129,7 +129,7 @@ int franReco(
   //---------------
 
   Fun4AllServer *se = Fun4AllServer::instance();
-  se->Verbosity(10);
+  se->Verbosity(4);
   // just if we set some flags somewhere in this macro
   recoConsts *rc = recoConsts::instance();
   // By default every random number generator uses
@@ -511,12 +511,12 @@ int franReco(
                 /*bool*/ do_hcalout_twr);
   }
 
-   ClusterIso *clusterIso = new ClusterIso(outputFile, 5, .3);
+ /*  ClusterIso *clusterIso = new ClusterIso(outputFile, 5, .3);
   se->registerSubsystem(clusterIso);
   
   TreeMaker *tt = new TreeMaker( outputFile );
   se->registerSubsystem( tt );
-  
+  */
 
   Fun4AllDstOutputManager *out = new Fun4AllDstOutputManager("DSTOUT", outputFile );
   if (do_dst_compress) DstCompress(out);
